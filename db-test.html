@@ -62,8 +62,8 @@
 			let bSaveWord = document.getElementById('btnSaveWord');
 			console.log('3 element:', iWord,iDescribe,bSaveWord);
 			bSaveWord.addEventListener('click', function(event) {
-				let word = iWord.innerHTML;
-				let text = iDescribe.innerHTML;
+				let word = iWord.value;
+				let text = iDescribe.value;
 				firebase.database().ref('words/' + word).set({
 					text: text
 				});
