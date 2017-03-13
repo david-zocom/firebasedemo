@@ -65,6 +65,7 @@
 			firebase.database().ref('words/' + word).set({
 				text: text
 			});
+			addMessage(`Sparar ${word}=${text} i databasen...`);
 		});
 		
 		//firebase.date
