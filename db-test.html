@@ -80,7 +80,7 @@
 				viewWords.innerHTML = '';  // ta bort gamla ord från listan
 				for( let prop in dataobject ) {
 					let li = document.createElement('li');
-					li.innerHTML = `${prop}: ${dataobject[prop]}`;
+					li.innerHTML = `${prop}: ${dataobject[prop].text}`;
 					viewWords.appendChild(li);
 				}
 			});
