@@ -37,14 +37,37 @@
 	<h1>Awesomesauce</h1>
 	<div>Hello wrldOOO</div>
 	<div id="select-all">Select all</div>
-
-	<div id="messages"></div>
+	
+	<p>
+		Skriv in ett intressant ord! <br>
+		<input type="text" id="inputWord" placeholder="Skriv in ett ord"/> <br>
+		<input type="text" id="inputDescribe" placeholder="Förklara varför det är intressant"/> <br>
+		<button id="btnSaveWord">Spara ord i databasen</button>
+	</p>
+	
+	<div id="messages"><strong>Meddelanden</strong></div>
+	
+	
 	<script type="text/javascript">
-		
+		// Hjälpfunktion
 		function addMessage(msg) {
 			let msgDiv = document.getElementById('messages');
-			msgDiv.innerHTML += ' <br><div>' + msg + '</div>';
+			msgDiv.innerHTML += `<div>${msg}</div> `;
 		}
+		
+		// Spara intressant ord till databasen
+		let iWord = document.getElementById('inputWord');
+		let iDescribe = document.getElementById('inputDescribe');
+		let bSaveWord = document.getElementById('btnSaveWord');
+		bSaveWord.addEventListener('click', function(event) {
+			let word = iWord.innerHTML;
+			let text = iDescribe.innerHTML;
+			firebase.database().ref('words/' + word).set({
+				text: text
+			});
+		});
+		
+		//firebase.date
 		
 		let posts = firebase.database().ref('posts/');
 		
