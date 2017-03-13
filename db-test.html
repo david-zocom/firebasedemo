@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="Firebase DB test">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Firebase Database test</title>
+
+	<style>
+		div {
+			border: 1px solid darkgray;
+			background-color: antiquewhite;
+			border-radius: 8px;
+			padding: 8px;
+			margin: 4px;
+		}
+	</style>
+	<script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
+	<script>
+		// Initialize Firebase
+		var config = {
+		apiKey: "AIzaSyD08rUvwXqekM8YoFhQjGWbV7o3g5r6VvQ",
+		authDomain: "myproject-f7ec9.firebaseapp.com",
+		databaseURL: "https://myproject-f7ec9.firebaseio.com",
+		storageBucket: "myproject-f7ec9.appspot.com",
+		messagingSenderId: "133847088463"
+		};
+		firebase.initializeApp(config);
+	</script>
+
+</head>
+<body>
+	<h1>Awesomesauce</h1>
+	<div>Hello wrldOOO</div>
+	<div id="select-all">Select all</div>
+
+	<script type="text/javascript">
+		
+		let posts = firebase.database().ref('posts/');
+		posts.on('value', function(snapshot) {
+			let value = snapshot.val();
+			//console.log(value);
+			for( let p in value ) {
+				//console.log('post:', value[p]);
+				displayPost(value[p]);
+			}
+		}, function(errorObject) {
+			console.log('the read failed: ' + errorObject.code);
+		});
+
+		let out = document.getElementById('select-all');
+		function displayPost(p) {
+			let div = document.createElement('div');
+			let span = document.createElement('span');
+			span.innerHTML = `Author: ${p.author} <br>`;
+			//let img = document.createElement('img');
+			//img.src = p.authorPic;
+			let span2 = document.createElement('span');
+			span2.innerHTML = `<strong>${p.title}</strong><br>${p.body}`;
+			div.appendChild(span);
+			//div.appendChild(img);
+			div.appendChild(span2);
+			out.appendChild(div);
+		}
+	</script>
+</body>
+</html>
