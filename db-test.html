@@ -44,6 +44,7 @@
 		<input type="text" id="inputDescribe" placeholder="Förklara varför det är intressant"/> <br>
 		<button id="btnSaveWord">Spara ord i databasen</button>
 	</p>
+	<ul id="listWords"></ul>
 	
 	<div id="messages"><strong>Meddelanden</strong></div>
 	
@@ -70,9 +71,21 @@
 				addMessage(`Sparar ${word}=${text} i databasen...`);
 			});
 
-			//firebase.date
+			firebase.database().ref('words/').on('value', function(snapshot) {
+				// Event listener is activated when loaded and
+				// every time the database changes
+				addMessage('Databasen -words- laddades eller ändrades.');
+				let dataobject = snapshot.val();
+				let viewWords = document.getElementById('listWords');
+				viewWords.innerHTML = '';  // ta bort gamla ord från listan
+				for( let prop in dataobject ) {
+					let li = document.createElement('li');
+					li.innerHTML = `${prop}: ${dataobject[prop]}`;
+					viewWords.appendChild(li);
+				}
+			});
 
-			let posts = firebase.database().ref('posts/');
+			/*let posts = firebase.database().ref('posts/');
 
 			// Event listener used to read from database
 			posts.on('value', function(snapshot) {
@@ -102,7 +115,7 @@
 				//div.appendChild(img);
 				div.appendChild(span2);
 				out.appendChild(div);
-			}
+			}*/
 		});
 	</script>
 </body>
