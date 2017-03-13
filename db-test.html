@@ -49,58 +49,60 @@
 	
 	
 	<script type="text/javascript">
-		// Hjälpfunktion
-		function addMessage(msg) {
-			let msgDiv = document.getElementById('messages');
-			msgDiv.innerHTML += `<div>${msg}</div> `;
-		}
-		
-		// Spara intressant ord till databasen
-		let iWord = document.getElementById('inputWord');
-		let iDescribe = document.getElementById('inputDescribe');
-		let bSaveWord = document.getElementById('btnSaveWord');
-		bSaveWord.addEventListener('click', function(event) {
-			let word = iWord.innerHTML;
-			let text = iDescribe.innerHTML;
-			firebase.database().ref('words/' + word).set({
-				text: text
-			});
-			addMessage(`Sparar ${word}=${text} i databasen...`);
-		});
-		
-		//firebase.date
-		
-		let posts = firebase.database().ref('posts/');
-		
-		// Event listener used to read from database
-		posts.on('value', function(snapshot) {
-			// Event listener is activated when loaded and
-			// every time the database changes
-			addMessage('Databasen laddades eller ändrades.');
-			let value = snapshot.val();
-			//console.log(value);
-			for( let p in value ) {
-				//console.log('post:', value[p]);
-				displayPost(value[p]);
+		window.addEventListener('load', function() {
+			// Hjälpfunktion
+			function addMessage(msg) {
+				let msgDiv = document.getElementById('messages');
+				msgDiv.innerHTML += `<div>${msg}</div> `;
 			}
-		}, function(errorObject) {
-			console.log('the read failed: ' + errorObject.code);
-		});
 
-		let out = document.getElementById('select-all');
-		function displayPost(p) {
-			let div = document.createElement('div');
-			let span = document.createElement('span');
-			span.innerHTML = `Author: ${p.author} <br>`;
-			//let img = document.createElement('img');
-			//img.src = p.authorPic;
-			let span2 = document.createElement('span');
-			span2.innerHTML = `<strong>${p.title}</strong><br>${p.body}`;
-			div.appendChild(span);
-			//div.appendChild(img);
-			div.appendChild(span2);
-			out.appendChild(div);
-		}
+			// Spara intressant ord till databasen
+			let iWord = document.getElementById('inputWord');
+			let iDescribe = document.getElementById('inputDescribe');
+			let bSaveWord = document.getElementById('btnSaveWord');
+			bSaveWord.addEventListener('click', function(event) {
+				let word = iWord.innerHTML;
+				let text = iDescribe.innerHTML;
+				firebase.database().ref('words/' + word).set({
+					text: text
+				});
+				addMessage(`Sparar ${word}=${text} i databasen...`);
+			});
+
+			//firebase.date
+
+			let posts = firebase.database().ref('posts/');
+
+			// Event listener used to read from database
+			posts.on('value', function(snapshot) {
+				// Event listener is activated when loaded and
+				// every time the database changes
+				addMessage('Databasen laddades eller ändrades.');
+				let value = snapshot.val();
+				//console.log(value);
+				for( let p in value ) {
+					//console.log('post:', value[p]);
+					displayPost(value[p]);
+				}
+			}, function(errorObject) {
+				console.log('the read failed: ' + errorObject.code);
+			});
+
+			let out = document.getElementById('select-all');
+			function displayPost(p) {
+				let div = document.createElement('div');
+				let span = document.createElement('span');
+				span.innerHTML = `Author: ${p.author} <br>`;
+				//let img = document.createElement('img');
+				//img.src = p.authorPic;
+				let span2 = document.createElement('span');
+				span2.innerHTML = `<strong>${p.title}</strong><br>${p.body}`;
+				div.appendChild(span);
+				//div.appendChild(img);
+				div.appendChild(span2);
+				out.appendChild(div);
+			}
+		});
 	</script>
 </body>
 </html>
