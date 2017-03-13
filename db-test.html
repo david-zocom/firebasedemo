@@ -53,10 +53,12 @@
 	<!-- Här kommer nya ord att läggas till -->
 	<ul id="listWords"></ul>
 	
+	<!-- Meddelanden som handlar om vad applikationen gör -->
 	<div id="messages"><strong>Meddelanden</strong></div>
 	
 	
 	<script type="text/javascript">
+		// För att garantera att inga DOM-element är null
 		window.addEventListener('load', function() {
 			// Hjälpfunktion
 			function addMessage(msg) {
@@ -78,7 +80,7 @@
 				addMessage(`Sparar ${word}=${text} i databasen...`);
 			});
 
-			// Visa innehållet i databasen
+			// Visa innehållet i databasen så fort det ändras
 			firebase.database().ref('words/').on('value', function(snapshot) {
 				// Event listener is activated when loaded and
 				// every time the database changes
